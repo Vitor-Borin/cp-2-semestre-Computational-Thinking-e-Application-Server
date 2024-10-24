@@ -30,4 +30,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 fetchButton.textContent = 'Buscar Dados do Usuário';
             });
     }
+
+    function populateForm(data) {
+        document.querySelector('#id').value = data.id;
+        document.querySelector('#name').value = data.name;
+        document.querySelector('#username').value = data.username;
+        document.querySelector('#email').value = data.email;
+        document.querySelector('#address').value = formatAddress(data.address);
+        document.querySelector('#phone').value = data.phone;
+        document.querySelector('#website').value = data.website;
+        document.querySelector('#company').value = formatCompany(data.company);
+    }
+
+    function formatAddress(address) {
+        return `${address.street}, ${address.suite}
+${address.city}, ${address.zipcode}
+Lat: ${address.geo.lat}, Lng: ${address.geo.lng}`;
+    }
+
+    function formatCompany(company) {
+        return `${company.name}
+${company.catchPhrase}
+${company.bs}`;
+    }
+
+    function displayJsonResult(data) {
+        resultDiv.textContent = JSON.stringify(data, null, 2);
+    }
+
+    function clearForm() {
+        form.reset();
+        resultDiv.textContent = '';
+    }
+
+    fetchButton.addEventListener('click', function() {
+        const userId = userIdInput.value;
+        fetchUserData(userId);
+    });
+
+    clearButton.addEventListener('click', clearForm);
+
+    clearForm();
 });
